@@ -1,11 +1,13 @@
 import './Home.css';
 import portrait from '../assets/portrait.jpeg';
+import fip from '../assets/fip.png';
+import progress from '../assets/progress.png';
+import num from '../assets/num.png';
 export default function Home() {
   return (
     <div>
-          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container">
-          <a className="navbar-brand" href="#">qmassua</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -46,7 +48,7 @@ export default function Home() {
       </section>
 
       {/* Section Compétences */}
-      <section id="competences" className="py-5 bg-light">
+      <section id="competences" className="py-5 bg-dark text-white">
         <div className="container">
           <h2>Mes compétences</h2>
           <div className="row">
@@ -57,7 +59,7 @@ export default function Home() {
                 <li>CSS</li>
                 <li>JavaScript</li>
                 <li>PHP</li>
-                <li>Python</li>
+                <li>Boostrap</li>
               </ul>
             </div>
             <div className="col-md-4">
@@ -72,7 +74,7 @@ export default function Home() {
               <h5>Autres</h5>
               <ul>
                 <li>Algorithmique</li>
-                <li>UML</li>
+                <li>MERISE</li>
                 <li>Bases de données</li>
               </ul>
             </div>
@@ -84,27 +86,27 @@ export default function Home() {
           <h2>Mes projets</h2>
           <div className="row">
             <div className="col-md-4">
-              <div className="card">
+              <div className="card project-card">
                 <img src={fip} className="card-img-top" alt="" />
-                <div className="card-body">
+                <div className="card-body bg-secondary">
                   <h5 className="card-title">Page de Connexion</h5>
                   <p className="card-text">HTML, CSS, PHP</p>
                 </div>
               </div>
             </div>
             <div className="col-md-4">
-              <div className="card">
+              <div className="card project-card">
                 <img src={progress} className="card-img-top" alt="" />
-                <div className="card-body">
+                <div className="card-body bg-secondary">
                   <h5 className="card-title">progression</h5>
                   <p className="card-text">HTML, JS</p>
                 </div>
               </div>
             </div>
             <div className="col-md-4">
-              <div className="card">
+              <div className="card project-card">
                 <img src={num} className="card-img-top" alt="" />
-                <div className="card-body">
+                <div className="card-body bg-secondary">
                   <h5 className="card-title">calcul d'equation non-lineaire avec python</h5>
                   <p className="card-text">Python</p>
                 </div>
@@ -118,10 +120,12 @@ export default function Home() {
       </section>
 
       {/* Section Contact(footer) */}
-      <section id="contact" className="py-5 bg-light">
+      <section id="contact" className="py-5 bg-dark text-white">
         <div className="container">
           <h2>Contact</h2>
           <p>Tu peux me joindre par email ou via GitHub.</p>
+          <p><a href="mailto:qmassuamondesirek@gmail.com">qmassuamondesirek@gmail.com</a></p>
+            <p><a href="https://github.com/QMASSUADEV08">GitHub</a></p>
         </div>
       </section>
     </div>
