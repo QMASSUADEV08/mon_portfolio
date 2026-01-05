@@ -1,102 +1,127 @@
 import './Home.css';
 import portrait from '../assets/portrait.jpeg';
-
 export default function Home() {
   return (
     <div>
+          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <a className="navbar-brand" href="#">qmassua</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item"><a className="nav-link" href="#accueil">Accueil</a></li>
+              <li className="nav-item"><a className="nav-link" href="#apropos">À propos</a></li>
+              <li className="nav-item"><a className="nav-link" href="#competences">Compétences</a></li>
+              <li className="nav-item"><a className="nav-link" href="#projets">Projets</a></li>
+              <li className="nav-item"><a className="nav-link" href="#contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
       {/* Section accueil */}
       <section className="hero">
         <div className="hero-left">
           <h4 className="name">Mondesire Kouadio</h4>
           <h1 className="title">PORTFOLIO</h1>
-          <h2 className="subtitle">Creative</h2>
           <p className="description">
             Étudiante en informatique, passionnée par le développement web et l'intelligence artificielle.
           </p>
           <a className="btn" href="#expertise">Voir mes projets</a>
         </div>
         <div className="hero-right">
-          <img src={portrait} alt="Qauser Massua" className="portrait" />
+          <img src={portrait} alt="Mondesire Kouadio" className="portrait" />
+        </div>
+      </section>
+      <section id="apropos" className="py-5">
+        <div className="container">
+          <h2>À propos de moi</h2>
+          <ul>
+            <li>Étudiante en Licence Informatique option genie logociel à Yamoussoukro</li>
+            <li>Objectif : devenir ingénieure en développement logiciel</li>
+          </ul>
         </div>
       </section>
 
-      {/* Section expertise (collée sur la même page) */}
-      <section id="expertise" className="py-5 bg-light">
+      {/* Section Compétences */}
+      <section id="competences" className="py-5 bg-light">
         <div className="container">
-          <h2 className="mb-0">Mon expertise</h2>
-          <h3 className="fw-light fs-5">Développement web et hobbies</h3>
-
-          <div className="row gy-4 mt-4">
-            <div className="col-12 col-md-7">
-              {/* Exemple HTML5 */}
-              <div className="mb-3 p-3 bg-white">
-                <div className="row align-items-center">
-                  <div className="col-5 col-sm-4 col-md-3 col-xl-2">
-                    <div className="d-flex align-items-center">
-                      <i className="fab fa-html5 fa-2x me-3 text-primary"></i>
-                      <p className="fw-bold m-0">HTML5</p>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="progress">
-                      <div
-                        className="progress-bar"
-                        role="progressbar"
-                        style={{ width: "75%" }}
-                        aria-valuenow="75"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      >
-                        75%
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Ajoute ici SQL, JS, CSS3, PHP comme dans ton code */}
+          <h2>Mes compétences</h2>
+          <div className="row">
+            <div className="col-md-4">
+              <h5>Langages</h5>
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>PHP</li>
+                <li>Python</li>
+              </ul>
             </div>
-
-            <div className="col-12 offset-md-1 col-md-4">
-              <img src="fip.png" alt="mon interface" width="100%" />
+            <div className="col-md-4">
+              <h5>Outils</h5>
+               <ul>
+                <li>Git & GitHub</li>
+                <li>MySQL</li>
+                <li>VS Code</li>
+              </ul>
+            </div>
+            <div className="col-md-4">
+              <h5>Autres</h5>
+              <ul>
+                <li>Algorithmique</li>
+                <li>UML</li>
+                <li>Bases de données</li>
+              </ul>
             </div>
           </div>
-
-          {/* Hobbies */}
-          <div className="row gy-4 mt-4">
-            <div className="col-12 col-md-4">
-              <img src="ququ.jpg" alt="hobby" width="100%" />
-            </div>
-            <div className="col-12 order-first offset-md-1 col-md-7 order-md-last">
-              {/* Exemple musique */}
-              <div className="mb-3 p-3 bg-white">
-                <div className="row align-items-center">
-                  <div className="col-5 col-sm-4 col-lg-3 col-xl-2">
-                    <div className="d-flex align-items-center text-uppercase">
-                      <i className="fas fa-music fa-2x me-3 text-primary"></i>
-                      <p className="fw-bold m-0">écouter la musique</p>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="progress">
-                      <div
-                        className="progress-bar"
-                        role="progressbar"
-                        style={{ width: "75%" }}
-                        aria-valuenow="75"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      >
-                        75%
-                      </div>
-                    </div>
-                  </div>
+        </div>
+      </section>
+      <section id="projets" className="py-5">
+        <div className="container">
+          <h2>Mes projets</h2>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="card">
+                <img src={fip} className="card-img-top" alt="" />
+                <div className="card-body">
+                  <h5 className="card-title">Page de Connexion</h5>
+                  <p className="card-text">HTML, CSS, PHP</p>
                 </div>
               </div>
-
-              {/* Ajoute ici manger, dormir, netflix, balade */}
+            </div>
+            <div className="col-md-4">
+              <div className="card">
+                <img src={progress} className="card-img-top" alt="" />
+                <div className="card-body">
+                  <h5 className="card-title">progression</h5>
+                  <p className="card-text">HTML, JS</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="card">
+                <img src={num} className="card-img-top" alt="" />
+                <div className="card-body">
+                  <h5 className="card-title">calcul d'equation non-lineaire avec python</h5>
+                  <p className="card-text">Python</p>
+                </div>
+              </div>
             </div>
           </div>
+          <div className="text-center mt-4">
+            <a href="#" className="btn btn-dark">Voir tous mes projets</a>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Contact(footer) */}
+      <section id="contact" className="py-5 bg-light">
+        <div className="container">
+          <h2>Contact</h2>
+          <p>Tu peux me joindre par email ou via GitHub.</p>
         </div>
       </section>
     </div>
