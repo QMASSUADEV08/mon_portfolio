@@ -1,0 +1,61 @@
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem;
+  min-height: 100vh;
+  background: linear-gradient(to right, #f8cdd9, #fcae7b);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.hero-left {
+  max-width: 50%;
+  color: #1a1a1a;
+}
+
+.name {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0;
+  color: #000;
+}
+
+.subtitle {
+  font-size: 3rem;
+  font-family: 'Brush Script MT', cursive;
+  color: #d94f91;
+  margin: 0.5rem 0 1rem;
+}
+
+.description {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  background-color: #000;
+  color: #fff;
+  padding: 0.8rem 1.4rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.hero-right {
+  max-width: 40%;
+}
+
+.portrait {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
