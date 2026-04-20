@@ -72,6 +72,20 @@ body {
   padding-bottom: 3rem;
 }
 
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #1b2233 0%, #0f1420 100%);
+  z-index: 9998;
+  pointer-events: none;
+  transform: translateY(0);
+  transition: transform 0.95s ease;
+}
+
+.page-loaded .page-transition {
+  transform: translateY(-100%);
+}
+
 .custom-cursor {
   position: fixed;
   top: 0;
@@ -280,6 +294,21 @@ body {
   font-size: clamp(2.8rem, 6vw, 5.6rem);
   line-height: 0.95;
   max-width: 12ch;
+}
+
+.hero-intro {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.hero-intro.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-visual.hero-intro {
+  transition-delay: 0.25s;
 }
 
 .hero-text,
@@ -906,6 +935,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    display: none;
+  }
+
   .reveal,
   .floating-note,
   .brand-mark__dot {
@@ -918,6 +951,12 @@ body {
   }
 
   .custom-cursor {
+    transition: none;
+  }
+
+  .hero-intro {
+    opacity: 1;
+    transform: none;
     transition: none;
   }
 

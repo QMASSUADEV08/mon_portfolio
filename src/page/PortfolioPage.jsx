@@ -97,6 +97,15 @@ const socialLinks = [
 
 function PortfolioPage() {
   const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false })
+  const [pageLoaded, setPageLoaded] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPageLoaded(true)
+    }, 120)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const items = document.querySelectorAll('[data-animate]')
@@ -143,7 +152,8 @@ function PortfolioPage() {
   }, [])
 
   return (
-    <div className="portfolio-page">
+    <div className={`portfolio-page ${pageLoaded ? 'page-loaded' : ''}`}>
+      <div className="page-transition" aria-hidden="true" />
       <div
         className={`custom-cursor${cursor.visible ? ' is-visible' : ''}`}
         style={{ transform: `translate3d(${cursor.x}px, ${cursor.y}px, 0)` }}
@@ -170,9 +180,10 @@ function PortfolioPage() {
       </header>
 
       <section className="site-shell hero-section reveal reveal-delay-2" id="accueil">
-        <div className="hero-copy" data-animate="slide-right">
+        <div className={`hero-copy hero-intro ${pageLoaded ? 'show' : ''}`} data-animate="slide-right">
           <p className="eyebrow">Developpeuse full-stack passionnée par le backend</p>
     
+          
           <p className="hero-text">
             Je suis KOUADIO QMASSUA MONDESIRE PHILOMENE, futur developpeuse backend et ingenieur IA.
           </p>
@@ -196,7 +207,7 @@ function PortfolioPage() {
           </div>
         </div>
 
-        <div className="hero-visual" data-animate="slide-left">
+        <div className={`hero-visual hero-intro ${pageLoaded ? 'show' : ''}`} data-animate="slide-left">
           <div className="portrait-card">
 
             <img src="mee2.jpeg" alt="#" />
