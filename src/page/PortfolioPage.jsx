@@ -1,103 +1,31 @@
-import { useEffect, useState } from 'react'
-import { FaHtml5, FaCss3Alt, FaJs, FaReact,FaBootstrap, FaPhp, FaLaravel, FaPython,FaTiktok } from "react-icons/fa";
-import { SiMysql } from "react-icons/si";
-import { FaWhatsapp } from "react-icons/fa";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
-import { MdEmail } from "react-icons/md"; 
-
-const navLinks = [
-  { label: 'A propos', href: '#apropos' },
-  { label: 'Competences', href: '#competences' },
-  { label: 'Projets', href: '#projets' },
-  { label: 'Contact', href: '#contact' },
-]
-
-const stats = [
-  { value: '02+', label: 'annees de progression ' },
-]
-
-const skillGroups = [
-  {
-    title: 'Frontend',
-    tags: [
-      { name: 'HTML', level: '90%' },
-      { name: 'CSS', level: '40%' },
-      { name: 'JavaScript', level: '50%' },
-      { name: 'React', level: '40%' },
-      { name: 'Bootstrap', level: '86%' },
-    ],
-  },
-  {
-    title: 'Backend',
-    tags: [
-      { name: 'PHP', level: '50%' },
-      { name: 'Laravel', level: '30%' },
-      { name: 'Python', level: '40%' },
-      { name: 'mySQL', level: '70%' },
-    ],
-  },
-  {
-    title: 'Outils de developpement',
-    tags: [
-      { name: 'Git', level: '70%' },
-      { name: 'GitHub', level: '83%' },
-      { name: 'VS Code', level: '80%' },
-      { name: 'Postman', level: '30%' },
-    ],
-  },
-]
-
-const projects = [
-  {
-    title: 'Bibliotheque en ligne - UIYA',
-    description:
-      "Une plateforme pour faciliter l'accès aux ressources academiques, avec recherche, reservation et gestion des emprunts dans une interface claire.",
-    image: "projet1.png",
-    technologies: ['React', 'CSS', 'Bootstrap', 'PHP', 'mySQL'],
-    accent: 'Projet academique',
-  },
-  {
-    title: "Resolution d'equations non-lineaires",
-    description:
-      "un interface simple pour faciliter le calcul des equations non-linéaire. L'utilisateur peut entrer une equation, choisir une methode de resolution et obtenir.",
-    image: "Capture d'écran 2026-04-09 220818.png",
-    technologies: ['Python', 'NumPy', 'Matplotlib'],
-    accent: 'Projet de calcul',
-  },
-]
-
-
-const frontendIcons = [
-  { label: 'HTML', icon: <FaHtml5 /> },
-  { label: 'CSS', icon: <FaCss3Alt /> },
-  { label: 'JavaScript', icon: <FaJs /> },
-  { label: 'React', icon: <FaReact /> },
-  { label: 'Bootstrap', icon: <FaBootstrap /> },
-]
-const backendIcons = [
-  { label: 'PHP', icon: <FaPhp /> },
-  { label: 'Laravel', icon: <FaLaravel /> },
-  { label: 'Python', icon: <FaPython /> },
-  { label: 'SQL', icon: <SiMysql /> },
-]
-
-
-const socialLinks = [
-  { label: 'TikTok', href: 'https://www.tiktok.com/@ququ_081?_r=1&_t=ZS-95TsRR1iGeL', icon: <FaTiktok /> },
-  { label: 'WhatsApp', href: 'https://wa.me/2250797012751', icon: <FaWhatsapp /> },
-  { label: 'Facebook', href: 'https://www.facebook.com/share/14dfLa7HJM5/', icon: <FaFacebook /> },
-  { label: 'Instagram', href: 'https://www.instagram.com/mondesire081?igsh=b3ZraGdteHphM3U4', icon: <FaInstagram /> },
-  { label: 'LinkedIn', href: '#', icon: <FaLinkedin /> },
-  { label: 'GitHub', href: 'https://github.com/QMASSUADEV08', icon: <FaGithub /> },
-  { label: 'Gmail', href: 'mailto:qmassuamondesirek@gmail.com', icon: <MdEmail /> },
-]
+import { useEffect, useMemo, useState } from 'react'
+import { FaMoon, FaSun } from 'react-icons/fa'
+import {
+  backendIcons,
+  frontendIcons,
+  navLinks,
+  projectFilters,
+  projects,
+  skillGroups,
+  socialLinks,
+  stats,
+  timeline,
+  valueCards,
+} from '../data/portfolioData'
 
 function PortfolioPage() {
   const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false })
   const [pageLoaded, setPageLoaded] = useState(false)
+  const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') || 'light')
+  const [activeFilter, setActiveFilter] = useState('all')
+
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === 'all') {
+      return projects
+    }
+
+    return projects.filter((project) => project.category === activeFilter)
+  }, [activeFilter])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -108,7 +36,12 @@ function PortfolioPage() {
   }, [])
 
   useEffect(() => {
-    const items = document.querySelectorAll('[data-animate]')
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('portfolio-theme', theme)
+  }, [theme])
+
+  useEffect(() => {
+    const animatedItems = document.querySelectorAll('[data-animate]')
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -122,15 +55,15 @@ function PortfolioPage() {
       { threshold: 0.18, rootMargin: '0px 0px -8% 0px' },
     )
 
-    items.forEach((item) => observer.observe(item))
+    animatedItems.forEach((item) => observer.observe(item))
 
     return () => observer.disconnect()
-  }, [])
+  }, [activeFilter])
 
   useEffect(() => {
-    const finePointer = window.matchMedia('(pointer: fine)').matches
+    const hasMouse = window.matchMedia('(pointer: fine)').matches
 
-    if (!finePointer) {
+    if (!hasMouse) {
       return undefined
     }
 
@@ -151,6 +84,10 @@ function PortfolioPage() {
     }
   }, [])
 
+  const toggleTheme = () => {
+    setTheme((current) => (current === 'light' ? 'dark' : 'light'))
+  }
+
   return (
     <div className={`portfolio-page ${pageLoaded ? 'page-loaded' : ''}`}>
       <div className="page-transition" aria-hidden="true" />
@@ -159,31 +96,35 @@ function PortfolioPage() {
         style={{ transform: `translate3d(${cursor.x}px, ${cursor.y}px, 0)` }}
         aria-hidden="true"
       />
+
       <header className="site-shell reveal reveal-delay-1">
         <nav className="topbar">
-          <a className="brand-mark" href="#accueil">
+          <a className="brand-mark text-decoration-none" href="#accueil">
             <span className="brand-mark__dot" />
             <span>
               <strong>K.Mondesire</strong>
-              
             </span>
           </a>
 
           <div className="topbar__links">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className='text-decoration-none'>
+              <a key={link.href} href={link.href} className="text-decoration-none">
                 {link.label}
               </a>
             ))}
           </div>
+
+          <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label="Changer de theme">
+            {theme === 'light' ? <FaMoon /> : <FaSun />}
+            <span>{theme === 'light' ? 'Sombre' : 'Clair'}</span>
+          </button>
         </nav>
       </header>
 
       <section className="site-shell hero-section reveal reveal-delay-2" id="accueil">
         <div className={`hero-copy hero-intro ${pageLoaded ? 'show' : ''}`} data-animate="slide-right">
-          <p className="eyebrow">Developpeuse full-stack passionnée par le backend</p>
-    
-          
+          <p className="eyebrow">Developpeuse full-stack passionnee par le backend</p>
+
           <p className="hero-text">
             Je suis KOUADIO QMASSUA MONDESIRE PHILOMENE, futur developpeuse backend et ingenieur IA.
           </p>
@@ -209,8 +150,7 @@ function PortfolioPage() {
 
         <div className={`hero-visual hero-intro ${pageLoaded ? 'show' : ''}`} data-animate="slide-left">
           <div className="portrait-card">
-
-            <img src="mee2.jpeg" alt="#" />
+            <img src="mee2.jpeg" alt="Portrait de KOUADIO QMASSUA MONDESIRE PHILOMENE" />
           </div>
 
           <div className="floating-note floating-note--top tech-orbit">
@@ -237,9 +177,20 @@ function PortfolioPage() {
         </div>
       </section>
 
+      <section className="site-shell value-strip reveal reveal-delay-3" aria-label="Points forts">
+        {valueCards.map((card, index) => (
+          <article key={card.title} className="value-card" data-animate="fade-up" style={{ '--delay': `${index * 90}ms` }}>
+            <span>0{index + 1}</span>
+            <h3>{card.title}</h3>
+            <p>{card.text}</p>
+          </article>
+        ))}
+      </section>
+
       <section className="site-shell section-grid reveal reveal-delay-3" id="apropos">
         <div className="section-heading" data-animate="fade-up">
           <p className="eyebrow">A propos de moi</p>
+          
         </div>
 
         <div className="about-layout">
@@ -247,29 +198,24 @@ function PortfolioPage() {
             <img src="mee1.jpeg" alt="Photo de presentation" />
             <div>
               <p>
-                Etudiante en deuxieme annee d'informatique option genie
-                logiciel à l'Universite Internationale de Yamoussoukro, je
-                construis progressivement un profil full-stack avec une affinite
-                marquee pour le backend.
+                Etudiante en deuxieme annee d'informatique, option genie logiciel a l'Universite Internationale de
+                Yamoussoukro, je construis petit à petit un profil full-stack avec une affinite marquee pour le
+                backend.
               </p>
               <p>
-                Mon objectif est clair: evoluer vers l'ingenierie en
-                intelligence artificielle, sans perdre la rigueur du web,
-                l'experience utilisateur et la qualite d'execution.
+                Mon objectif est clair : evoluer vers l ingenierie en intelligence artificielle, sans perdre la rigueur
+                du web, l'experience utilisateur et la qualite d'execution.
               </p>
             </div>
           </article>
 
           <article className="glass-card timeline-card" data-animate="slide-left">
-            <div className="timeline-row">
-              <span>Formation</span>
-              <strong>Genie logiciel - UIYA</strong>
-            </div>
-            <div className="timeline-row">
-              <span>Preference</span>
-              <strong>Developpement backend</strong>
-            </div>
-           
+            {timeline.map((item) => (
+              <div key={item.label} className="timeline-row">
+                <span>{item.label}</span>
+                <strong>{item.value}</strong>
+              </div>
+            ))}
           </article>
         </div>
       </section>
@@ -277,6 +223,7 @@ function PortfolioPage() {
       <section className="site-shell reveal reveal-delay-4" id="competences">
         <div className="section-heading" data-animate="fade-up">
           <p className="eyebrow">Competences</p>
+          <h2>Une base technique claire, lisible et orientee pratique.</h2>
         </div>
 
         <div className="skills-grid">
@@ -289,16 +236,17 @@ function PortfolioPage() {
             >
               <p className="skill-panel__label">{group.title}</p>
               <h3>{group.text}</h3>
-              <div className="chip-list">
+              <div className="skill-bars">
                 {group.tags.map((tag) => (
-                  <span
-                    key={tag.name}
-                    className="skill-chip"
-                    data-level={tag.level}
-                    aria-label={`${tag.name} ${tag.level}`}
-                  >
-                    {tag.name}
-                  </span>
+                  <div key={tag.name} className="skill-meter">
+                    <div className="skill-meter__top">
+                      <span>{tag.name}</span>
+                      <strong>{tag.level}%</strong>
+                    </div>
+                    <div className="skill-meter__track" aria-label={`${tag.name} ${tag.level}%`}>
+                      <span style={{ width: `${tag.level}%` }} />
+                    </div>
+                  </div>
                 ))}
               </div>
             </article>
@@ -307,13 +255,28 @@ function PortfolioPage() {
       </section>
 
       <section className="site-shell reveal reveal-delay-5" id="projets">
-        <div className="section-heading" data-animate="fade-up">
-          <p className="eyebrow">Projets</p>
-          <h2>Des realisations qui melangent interface, logique applicative et intention claire.</h2>
+        <div className="section-heading section-heading--split" data-animate="fade-up">
+          <div>
+            <p className="eyebrow">Projets</p>
+            <h2>Des realisations qui melangent interface, logique applicative et intention claire.</h2>
+          </div>
+
+          <div className="filter-tabs" role="tablist" aria-label="Filtrer les projets">
+            {projectFilters.map((filter) => (
+              <button
+                key={filter.value}
+                className={activeFilter === filter.value ? 'is-active' : ''}
+                type="button"
+                onClick={() => setActiveFilter(filter.value)}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="projects-grid">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <article
               key={project.title}
               className="project-showcase"
@@ -328,6 +291,7 @@ function PortfolioPage() {
                 <span className="project-accent">{project.accent}</span>
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
+                <strong className="project-impact">{project.impact}</strong>
 
                 <div className="chip-list">
                   {project.technologies.map((tech) => (
@@ -345,11 +309,12 @@ function PortfolioPage() {
           <div>
             <p className="eyebrow">Contact</p>
             <h2>Un projet, un stage ou une collaboration en tete ? Parlons-en.</h2>
+            <p>Disponible pour apprendre, contribuer et transformer une idee en experience web soignee.</p>
           </div>
 
           <div className="contact-actions">
-            <a className="button button--primary" href="mailto:qmassuamondesirek@gmail.com">
-              qmassuamondesirek@gmail.com
+            <a className="button button--primary text-decoration-none" href="mailto:qmassuamondesirek@gmail.com">
+              M ecrire
             </a>
             <a className="button button--ghost text-decoration-none" href="#accueil">
               Retour en haut
@@ -361,12 +326,20 @@ function PortfolioPage() {
       <footer className="site-shell footer-bar reveal reveal-delay-6">
         <div className="footer-socials" data-animate="fade-up">
           {socialLinks.map((item) => (
-            <a key={item.label} className="footer-social" href={item.href} aria-label={item.label} title={item.label}>
+            <a
+              key={item.label}
+              className="footer-social"
+              href={item.href}
+              aria-label={item.label}
+              title={item.label}
+              target={item.href.startsWith('http') ? '_blank' : undefined}
+              rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+            >
               {item.icon}
             </a>
           ))}
         </div>
-        <p>© 2026 KOUADIO QMASSUA MONDESIRE. Portfolio personnel.</p>
+        <p>Copyright 2026 KOUADIO QMASSUA MONDESIRE. Portfolio personnel.</p>
       </footer>
     </div>
   )
