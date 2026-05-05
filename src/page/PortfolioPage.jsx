@@ -223,7 +223,6 @@ function PortfolioPage() {
       <section className="site-shell reveal reveal-delay-4" id="competences">
         <div className="section-heading" data-animate="fade-up">
           <p className="eyebrow">Competences</p>
-          <h2>Une base technique claire, lisible et orientee pratique.</h2>
         </div>
 
         <div className="skills-grid">

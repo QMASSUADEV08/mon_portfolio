@@ -81,7 +81,7 @@ export const projects = [
   {
     title: 'Bibliotheque en ligne - UIYA',
     description:
-      "Plateforme academique pour faciliter l acces aux ressources, la recherche, la reservation et la gestion des emprunts dans une interface claire.",
+      "Plateforme academique pour faciliter l'acces aux ressources, la recherche, la reservation et la gestion des emprunts dans une interface claire.",
     image: 'projet1.png',
     technologies: ['React', 'CSS', 'Bootstrap', 'PHP', 'MySQL'],
     accent: 'Projet academique',
@@ -91,7 +91,7 @@ export const projects = [
   {
     title: 'Resolution d equations non-lineaires',
     description:
-      "Interface de calcul permettant d entrer une equation, de choisir une methode de resolution et de visualiser les resultats.",
+      "Interface de calcul permettant d'entrer une equation, de choisir une methode de resolution et de visualiser les resultats.",
     image: 'Capture d\u0027\u00e9cran 2026-04-09 220818.png',
     technologies: ['Python', 'NumPy', 'Matplotlib'],
     accent: 'Projet de calcul',
@@ -124,8 +124,8 @@ export const backendIcons = [
 export const timeline = [
   { label: 'Formation', value: 'Genie logiciel - UIYA' },
   { label: 'Preference', value: 'Developpement backend' },
-  { label: 'Vision', value: 'Web, donnees et intelligence artificielle' },
-  { label: 'Qualites', value: 'Curiosite, autonomie et sens du detail' },
+  { label: 'Vision', value: 'Web et intelligence artificielle' },
+  { label: 'Qualites', value: 'Curieuse et determinée' },
 ]
 
 export const socialLinks = [
