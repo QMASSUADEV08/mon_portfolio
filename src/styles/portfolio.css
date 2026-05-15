@@ -21,19 +21,19 @@
 /* Theme sombre active quand React ajoute data-theme="dark" sur la balise html. */
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --portfolio-bg: #09111f;
-  --portfolio-bg-2: #101b2d;
-  --portfolio-card: rgba(16, 27, 45, 0.86);
-  --portfolio-card-strong: #142238;
-  --portfolio-line: rgba(226, 232, 240, 0.12);
-  --portfolio-text: #eef4ff;
-  --portfolio-muted: #a5b4c8;
-  --portfolio-accent: #60a5fa;
-  --portfolio-accent-2: #2dd4bf;
-  --portfolio-accent-soft: #fbbf24;
-  --portfolio-glow: rgba(96, 165, 250, 0.22);
-  --portfolio-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
-  --portfolio-shadow-soft: 0 16px 36px rgba(0, 0, 0, 0.24);
+  --portfolio-bg: #090912;
+  --portfolio-bg-2: #1a102b;
+  --portfolio-card: rgba(35, 20, 58, 0.78);
+  --portfolio-card-strong: #211634;
+  --portfolio-line: rgba(214, 179, 255, 0.16);
+  --portfolio-text: #f6efff;
+  --portfolio-muted: #c7b6dd;
+  --portfolio-accent: #a855f7;
+  --portfolio-accent-2: #7c3aed;
+  --portfolio-accent-soft: #f0abfc;
+  --portfolio-glow: rgba(168, 85, 247, 0.34);
+  --portfolio-shadow: 0 28px 80px rgba(4, 3, 10, 0.58);
+  --portfolio-shadow-soft: 0 18px 42px rgba(4, 3, 10, 0.4);
 }
 
 /*  police, fond general et comportement du scroll. */
@@ -53,6 +53,17 @@ body {
     linear-gradient(115deg, color-mix(in srgb, var(--portfolio-accent) 8%, transparent), transparent 34%),
     linear-gradient(245deg, color-mix(in srgb, var(--portfolio-accent-2) 10%, transparent), transparent 38%),
     linear-gradient(180deg, var(--portfolio-bg) 0%, var(--portfolio-bg-2) 100%);
+}
+
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(168, 85, 247, 0.52), transparent 24rem),
+    radial-gradient(circle at 82% 18%, rgba(76, 29, 149, 0.5), transparent 22rem),
+    radial-gradient(circle at 28% 70%, rgba(124, 58, 237, 0.42), transparent 24rem),
+    linear-gradient(118deg, transparent 0 20%, rgba(168, 85, 247, 0.16) 25%, transparent 38%),
+    linear-gradient(132deg, transparent 0 46%, rgba(216, 180, 254, 0.12) 54%, transparent 68%),
+    linear-gradient(155deg, #07070e 0%, #130d24 38%, #2b1451 72%, #0a0912 100%);
+  background-attachment: fixed;
 }
 
 body::selection {
@@ -99,6 +110,18 @@ body::selection {
   opacity: 0.42;
 }
 
+:root[data-theme='dark'] .portfolio-page::before {
+  background-image:
+    radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.24) 0 1px, transparent 2px),
+    linear-gradient(75deg, transparent 0 36%, rgba(167, 139, 250, 0.2) 42%, transparent 52%),
+    linear-gradient(105deg, transparent 0 54%, rgba(88, 28, 135, 0.42) 62%, transparent 76%),
+    linear-gradient(var(--portfolio-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--portfolio-line) 1px, transparent 1px);
+  background-size: 220px 220px, 100% 100%, 100% 100%, 76px 76px, 76px 76px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.64), transparent 78%);
+  opacity: 0.5;
+}
+
 /*Transition d'entree, curseur personnalise et animations au scroll. */
 .page-transition {
   position: fixed;
@@ -129,8 +152,9 @@ body::selection {
   pointer-events: none;
   z-index: 9999;
   opacity: 0;
-  transition: opacity 180ms ease, transform 260ms ease-out;
+  transition: opacity 120ms ease;
   box-shadow: 0 0 0 6px var(--portfolio-glow);
+  will-change: transform;
 }
 
 .custom-cursor.is-visible {
@@ -279,6 +303,7 @@ body::selection {
 
 /* Style commun pour les boutons du site et les filtres de projet. */
 .theme-toggle,
+.language-toggle,
 .button,
 .filter-tabs button {
   display: inline-flex;
@@ -296,10 +321,17 @@ body::selection {
 }
 
 /* Bouton qui bascule entre theme clair et theme sombre. */
-.theme-toggle {
+.topbar__actions {
+  display: inline-flex;
+  align-items: center;
   gap: 0.55rem;
-  min-height: 2.8rem;
-  padding: 0.7rem 0.95rem;
+}
+
+.theme-toggle,
+.language-toggle {
+  width: 2.8rem;
+  height: 2.8rem;
+  padding: 0;
   color: var(--portfolio-text);
   background: var(--portfolio-card);
   box-shadow: var(--portfolio-shadow-soft);
@@ -310,7 +342,13 @@ body::selection {
   height: 1rem;
 }
 
+.language-toggle {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
 .theme-toggle:hover,
+.language-toggle:hover,
 .button:hover,
 .filter-tabs button:hover {
   transform: translateY(-2px);
@@ -800,29 +838,116 @@ body::selection {
   border-color: transparent;
 }
 
-/* Section projets Cartes de projets avec image, description, impact et technologies. */
+/* Section projets en panneau compact, inspiree d'un portfolio dashboard. */
+.projects-board {
+  display: grid;
+  grid-template-columns: 4.6rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--portfolio-accent) 28%, var(--portfolio-line));
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 18% 36%, color-mix(in srgb, var(--portfolio-accent) 22%, transparent), transparent 18rem),
+    radial-gradient(circle at 92% 10%, color-mix(in srgb, var(--portfolio-accent-2) 18%, transparent), transparent 16rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--portfolio-card-strong) 88%, #05040c), #0b0b18);
+  box-shadow: var(--portfolio-shadow);
+  overflow: hidden;
+}
+
+.projects-board__rail {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.8rem;
+  min-height: 100%;
+  padding: 1rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--portfolio-accent) 22%, transparent);
+  border-radius: 8px;
+  background: rgba(8, 10, 24, 0.58);
+  box-shadow: inset 0 0 24px color-mix(in srgb, var(--portfolio-accent) 12%, transparent);
+}
+
+.projects-board__rail button {
+  width: 2.35rem;
+  height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--portfolio-accent) 28%, transparent);
+  border-radius: 8px;
+  color: var(--portfolio-muted);
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 900;
+  transition: transform 260ms ease, color 260ms ease, background 260ms ease, box-shadow 260ms ease;
+}
+
+.projects-board__rail button:hover,
+.projects-board__rail button.is-active {
+  transform: translateY(-2px);
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--portfolio-accent), var(--portfolio-accent-2));
+  box-shadow: 0 0 22px var(--portfolio-glow);
+}
+
+.projects-board__content {
+  min-width: 0;
+  padding: 1.1rem;
+}
+
+.projects-board__heading {
+  max-width: 560px;
+  margin: 0 auto 1.35rem;
+  text-align: center;
+}
+
+.projects-board__heading .eyebrow {
+  margin-bottom: 0.35rem;
+}
+
+.projects-board__heading h2 {
+  margin: 0;
+  font-family: 'Syne', 'Segoe UI', sans-serif;
+  color: var(--portfolio-text);
+  font-size: clamp(1.65rem, 4vw, 2.7rem);
+}
+
+.projects-board__heading span {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--portfolio-muted);
+  font-weight: 700;
+}
+
 .projects-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
 }
 
 .project-showcase {
+  display: grid;
   overflow: hidden;
+  min-height: 100%;
+  background: rgba(12, 13, 30, 0.72);
+  border-color: color-mix(in srgb, var(--portfolio-accent) 20%, var(--portfolio-line));
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
   transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
 }
 
 .project-showcase__media {
   overflow: hidden;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   position: relative;
+  margin: 0.65rem 0.65rem 0;
+  border: 1px solid color-mix(in srgb, var(--portfolio-accent) 18%, transparent);
+  border-radius: 6px;
   background: var(--portfolio-card-strong);
 }
 
-/* Degrade leger au-dessus de l'image quand on survole la carte. */
 .project-showcase__media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 44%, rgba(3, 7, 18, 0.16));
+  background: linear-gradient(180deg, transparent 35%, rgba(8, 8, 20, 0.34));
   opacity: 0;
   transition: opacity 300ms ease;
 }
@@ -835,7 +960,7 @@ body::selection {
 }
 
 .project-showcase:hover .project-img {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .project-showcase:hover .project-showcase__media::after {
@@ -843,7 +968,7 @@ body::selection {
 }
 
 .project-showcase__body {
-  padding: 1.45rem;
+  padding: 0.9rem 0.9rem 1rem;
   transition: transform 300ms ease;
 }
 
@@ -852,23 +977,39 @@ body::selection {
 }
 
 .project-accent {
-  padding: 0.5rem 0.7rem;
-  margin-bottom: 1rem;
+  padding: 0.35rem 0.55rem;
+  margin-bottom: 0.65rem;
   color: var(--portfolio-accent);
-  font-size: 0.72rem;
+  font-size: 0.64rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.14em;
 }
 
 .project-showcase__body h3 {
-  font-size: 1.45rem;
-  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  margin-bottom: 0.45rem;
 }
 
 .project-showcase__body p {
-  line-height: 1.75;
-  margin-bottom: 0.9rem;
+  display: -webkit-box;
+  min-height: 3.9rem;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  color: var(--portfolio-muted);
+  line-height: 1.55;
+  font-size: 0.82rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.project-showcase .chip-list {
+  gap: 0.4rem;
+}
+
+.project-showcase .chip-list span {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.72rem;
 }
 
 .project-impact {
@@ -1040,6 +1181,17 @@ body::selection {
     flex: 1 0 auto;
   }
 
+  .projects-board {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-board__rail {
+    display: flex;
+    min-height: auto;
+    justify-content: center;
+    overflow-x: auto;
+  }
+
   .hero-visual {
     min-height: auto;
   }
@@ -1083,7 +1235,11 @@ body::selection {
   }
 
   .theme-toggle {
-    width: 100%;
+    width: 2.8rem;
+  }
+
+  .topbar__actions {
+    justify-content: center;
   }
 
   .hero-section {
@@ -1100,5 +1256,17 @@ body::selection {
 
   .contact-banner {
     padding: 1.25rem;
+  }
+
+  .projects-board {
+    padding: 0.7rem;
+  }
+
+  .projects-board__content {
+    padding: 0.6rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
   }
 }

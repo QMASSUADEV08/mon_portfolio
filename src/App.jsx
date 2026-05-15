@@ -1,8 +1,7 @@
-import PortfolioPage from './page/PortfolioPage'
+import PagePortfolio from './PortfolioPage.jsx'
 
 function App() {
-  return <PortfolioPage />
-    
+  return <PagePortfolio />
 }
 
 export default App
